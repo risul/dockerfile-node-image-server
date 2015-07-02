@@ -29,7 +29,7 @@ $ docker run -d -p 8090:8080 \
 	-e IMAGE_EXPIRY_SHORT=86400 \
 	-e JSON_EXPIRY=2592000 \
 	risul/node-image-server:latest
-```¨
+```
 
 More [info](https://github.com/jimmynicol/image-resizer#environment-variables) about the environment variables
 
