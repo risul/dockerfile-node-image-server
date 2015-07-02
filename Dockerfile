@@ -23,6 +23,16 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 	&& npm install -g npm@"$NPM_VERSION" \
 	&& npm cache clear
 
+#Install image-resizer	
+RUN npm install -g image-resizer \
+	&& mkdir -p /var/www/app \
+	&& cd /var/www/app \
+	&& image-resizer new \
+	&& npm install
+	
+#Add env variables
+ENV NODE_ENV=production
+ENV PORT=8080
 	
 # Clean up
 WORKDIR /
@@ -32,3 +42,6 @@ RUN apt-get remove -y curl automake build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 	
+#App runs on port 8080
+EXPOSE  8080
+CMD ["node", "/var/www/app/index.js"]
