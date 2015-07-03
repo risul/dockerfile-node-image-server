@@ -36,11 +36,14 @@ ENV PORT=8080
 	
 # Clean up
 WORKDIR /
-RUN apt-get remove -y curl automake build-essential && \
-    apt-get autoremove -y && \
-    apt-get autoclean && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get remove -y curl automake build-essential \
+    && apt-get autoremove -y \
+    && apt-get autoclean \
+    && apt-get clean \
+    && rm -rf /usr/share/doc-base /usr/share/man /usr/share/locale /usr/share/zoneinfo \
+    && rm -rf /var/lib/cache /var/lib/log \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && npm cache clear
 	
 #App runs on port 8080
 EXPOSE  8080
