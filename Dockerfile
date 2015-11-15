@@ -8,10 +8,18 @@ RUN \
   automake build-essential curl
   
 # verify gpg and sha256: http://nodejs.org/dist/v0.10.31/SHASUMS256.txt.asc
-RUN gpg --keyserver pool.sks-keyservers.net --recv-keys 7937DFD2AB06298B2293C3187D33FF9D0246406D 114F43EE0176B71C7BC219DD50A3051F888C628D
+# gpg: aka "Timothy J Fontaine (Work) <tj.fontaine@joyent.com>"
+# gpg: aka "Julien Gilli <jgilli@fastmail.fm>"
+RUN set -ex \
+	&& for key in \
+		7937DFD2AB06298B2293C3187D33FF9D0246406D \
+		114F43EE0176B71C7BC219DD50A3051F888C628D \
+	; do \
+		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+	done
 
-ENV NODE_VERSION 0.10.39
-ENV NPM_VERSION 2.11.3
+ENV NODE_VERSION 0.10.40
+ENV NPM_VERSION 2.14.1
 
 WORKDIR /tmp
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
